@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+
+<table class="table">
+  <thead>
+  <tr>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>Nationality</th>
+      <th>Update</th>
+      <th>Delete</th>
+      <th>Books</th>
+  </tr>
+  </thead>
+
+    <tbody>
+    <tr th:each="author:${allAuthors}">
+        <td th:text="${author.getFirstName()}"></td>
+        <td th:text="${author.getLastName()}"></td>
+        <td th:text="${author.getNationality()}"></td>
+        <td>
+            <a th:href="@{/authors/{id}(id=${author.getId()})}">Update</a>
+        </td>
+        <td>
+            <a th:href="@{/authors/{id}/delete(id=${author.getId()})}">Delete</a>
+        </td>
+        <td>
+        <form th:action="@{/authors/assign/{authorId}(authorId=${author.id})}" method="post">
+            <select name="bookId">
+                <option
+                    th:each="book:${allBooks}" th:value="${book.id}" th:text="${book.name}">
+                </option>
+            </select>
+            <button type="submit">Assign</button>
+        </form>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+<a href="authors/new">Create Author</a>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</html>
